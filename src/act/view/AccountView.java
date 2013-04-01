@@ -19,14 +19,17 @@ public class AccountView extends JFrameView {
 		textField.setText("0");
 		this.getContentPane().add(textField, BorderLayout.NORTH);
 		JPanel buttonPanel = new JPanel();
-		Handler handler = new Handler();
+		Handler l = new Handler();
 		
+		JComboBox accountsCombo = new JComboBox();
+		accountsCombo.addActionListener(l);
 		JButton jButton1 = new JButton();
-		jButton1.addActionListener(handler);
+		jButton1.addActionListener(l);
 		
-		buttonPanel.setLayout(new GridLayout(4, 4, 5, 5));
+		buttonPanel.setLayout(new GridLayout(5, 5, 7, 7));
 		this.getContentPane().add(buttonPanel, BorderLayout.CENTER);
 		
+		buttonPanel.add(accountsCombo);
 		buttonPanel.add(jButton1);
 		
 		pack();
