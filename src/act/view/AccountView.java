@@ -3,6 +3,10 @@ package act.view;
 import javax.swing.*; 
 import java.awt.*; 
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 import act.model.AccountModel;
 import act.model.ModelEvent;
@@ -12,8 +16,12 @@ import act.controller.AccountController;
 public class AccountView extends JFrameView {
 	
 	private JTextField textField = new JTextField();
+	private String [] accounts;
 	
-	public AccountView(AccountModel model, AccountController controller){
+	/*
+	 * AccountView initializes the view and opens the file specified by the command line.
+	 */
+	public AccountView(AccountModel model, AccountController controller, String [] args){
 		super(model, controller);
 		
 		textField.setText("0");
@@ -21,7 +29,8 @@ public class AccountView extends JFrameView {
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		
-		JComboBox accountsCombo = new JComboBox();
+		accounts = readAccounts(args);
+		JComboBox accountsCombo = new JComboBox(accounts);
 		accountsCombo.addActionListener(l);
 		JButton jButton1 = new JButton();
 		jButton1.addActionListener(l);
@@ -34,10 +43,33 @@ public class AccountView extends JFrameView {
 		
 		pack();
 		
-		
 	}
 	
-
+	private String [] readAccounts(String [] args){
+		
+	    	 
+        // Location of file to read
+        File file = new File(args[0]);
+        ArrayList<String> stringList = new ArrayList<String>();
+                
+        try {
+            Scanner scanner = new Scanner(file);
+ 
+            while (scanner.hasNextLine()) {
+                stringList.add(scanner.nextLine());
+            }
+            String [] retArray = new String[stringList.size()];
+            stringList.toArray(retArray);
+            scanner.close();
+            
+            return retArray;
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+	}
+	
 	@Override
 	public void modelChanged(ModelEvent event) {
 		// TODO Auto-generated method stub
@@ -47,8 +79,12 @@ public class AccountView extends JFrameView {
 	class Handler implements ActionListener { 
 		// Event handling is handled locally
 		public void actionPerformed(ActionEvent e) {
-//			((CalculatorController)getController()).operation(e.getActionCommand()); 
+//			((AccountController)getController()).operation(e.getActionCommand()); 
 	    } }
 	
-	public static void main(String [] args) { new AccountController(); }
+	/**
+	 * Main is located inside of the view class.  It accepts the path of the input file as an argument
+	 * @param String []
+	 */
+	public static void main(String [] args) { new AccountController(args);}
 }
