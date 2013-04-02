@@ -98,7 +98,7 @@ public class AccountView extends JFrameView {
 	class Handler implements ActionListener { 
 		// Event handling is handled locally
 		public void actionPerformed(ActionEvent e) {
-			((AccountController)getController()).operation(e.getActionCommand()); 
+			((AccountController)getController()).operation(e.getActionCommand());
 	    } }
 	
 	/**
