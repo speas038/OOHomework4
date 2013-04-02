@@ -24,30 +24,47 @@ public class AccountView extends JFrameView {
 	public AccountView(AccountModel model, AccountController controller, String [] args){
 		super(model, controller);
 		
-		textField.setText("0");
-		this.getContentPane().add(textField, BorderLayout.NORTH);
+//		textField.setText("0");
+//		this.getContentPane().add(textField, BorderLayout.NORTH);
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		
 		accounts = readAccounts(args);
 		JComboBox accountsCombo = new JComboBox(accounts);
 		accountsCombo.addActionListener(l);
-		JButton jButton1 = new JButton();
-		jButton1.addActionListener(l);
+		JButton jButtonUSD = new JButton("Edit in USD");
+		jButtonUSD.addActionListener(l);
+		JButton jButtonEuros = new JButton("Edit in Euros");
+		jButtonEuros.addActionListener(l);
+		JButton jButtonYen = new JButton("Edit in Yen");
+		jButtonYen.addActionListener(l);
+		JButton jButtonSave = new JButton("Save");
+		jButtonSave.addActionListener(l);
+		JButton jButtonExit = new JButton("Exit");
+		jButtonExit.addActionListener(l);
 		
 		buttonPanel.setLayout(new GridLayout(5, 5, 7, 7));
 		this.getContentPane().add(buttonPanel, BorderLayout.CENTER);
 		
 		buttonPanel.add(accountsCombo);
-		buttonPanel.add(jButton1);
+		buttonPanel.add(jButtonUSD);
+		buttonPanel.add(jButtonEuros);
+		buttonPanel.add(jButtonYen);
+		buttonPanel.add(jButtonSave);
+		buttonPanel.add(jButtonExit);
 		
 		pack();
 		
 	}
 	
-	private String [] readAccounts(String [] args){
+	/**
+	 * readAccounts is for the initialization of the JComboBox that holds the accounts.
+	 * 
+	 * @param args
+	 * @return String []
+	 */
+	private String [] readAccounts(String [] args){	
 		
-	    	 
         // Location of file to read
         File file = new File(args[0]);
         ArrayList<String> stringList = new ArrayList<String>();
