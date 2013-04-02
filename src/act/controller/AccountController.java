@@ -13,4 +13,18 @@ public class AccountController extends AbstractController {
 		setView( new AccountView( (AccountModel)getModel(), this, args ));
 		((JFrameView)getView()).setVisible(true);
 	}
+	
+	public void operation(String option){
+		if(option == AccountView.USD){
+			((AccountModel)getModel()).usd();
+		}else if(option == AccountView.EUROS){
+			((AccountModel)getModel()).euros();
+		}else if(option == AccountView.YEN){
+			((AccountModel)getModel()).yen();
+		}else if(option == AccountView.SAVE){
+			((AccountModel)getModel()).save();
+		}else if(option == AccountView.EXIT){
+			((AccountModel)getModel()).exit();
+		}
+	}
 }

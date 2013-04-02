@@ -15,32 +15,34 @@ import act.controller.AccountController;
 @SuppressWarnings("serial")
 public class AccountView extends JFrameView {
 	
-	private JTextField textField = new JTextField();
 	private String [] accounts;
+	public static final String USD = "Edit in USD"; 
+	public static final String EUROS = "Edit in Euros"; 
+	public static final String YEN = "Edit in Yen"; 
+	public static final String SAVE = "Save"; 
+	public static final String EXIT = "Exit"; 
 	
 	/*
 	 * AccountView initializes the view and opens the file specified by the command line.
 	 */
 	public AccountView(AccountModel model, AccountController controller, String [] args){
-		super(model, controller);
 		
-//		textField.setText("0");
-//		this.getContentPane().add(textField, BorderLayout.NORTH);
+		super(model, controller);
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		
 		accounts = readAccounts(args);
 		JComboBox accountsCombo = new JComboBox(accounts);
 		accountsCombo.addActionListener(l);
-		JButton jButtonUSD = new JButton("Edit in USD");
+		JButton jButtonUSD = new JButton(USD);
 		jButtonUSD.addActionListener(l);
-		JButton jButtonEuros = new JButton("Edit in Euros");
+		JButton jButtonEuros = new JButton(EUROS);
 		jButtonEuros.addActionListener(l);
-		JButton jButtonYen = new JButton("Edit in Yen");
+		JButton jButtonYen = new JButton(YEN);
 		jButtonYen.addActionListener(l);
-		JButton jButtonSave = new JButton("Save");
+		JButton jButtonSave = new JButton(SAVE);
 		jButtonSave.addActionListener(l);
-		JButton jButtonExit = new JButton("Exit");
+		JButton jButtonExit = new JButton(EXIT);
 		jButtonExit.addActionListener(l);
 		
 		buttonPanel.setLayout(new GridLayout(5, 5, 7, 7));
@@ -96,7 +98,7 @@ public class AccountView extends JFrameView {
 	class Handler implements ActionListener { 
 		// Event handling is handled locally
 		public void actionPerformed(ActionEvent e) {
-//			((AccountController)getController()).operation(e.getActionCommand()); 
+			((AccountController)getController()).operation(e.getActionCommand()); 
 	    } }
 	
 	/**
