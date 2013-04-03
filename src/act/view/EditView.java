@@ -35,6 +35,8 @@ public class EditView extends JFrameView{
 		
 		JLabel balanceLabel = new JLabel("Balance:");
 		JTextField accountTextField = new JTextField(((Account)model.getCurrentAccount()).getBalanceString());
+		accountTextField.setEditable(false);
+		JTextField editTextField = new JTextField("0.0");
 		JButton jButtonDeposit = new JButton(editDeposit);
 		jButtonDeposit.addActionListener(l);
 		JButton jButtonWithdraw = new JButton(editWithdraw);
@@ -47,6 +49,7 @@ public class EditView extends JFrameView{
 		
 		buttonPanel.add(balanceLabel);
 		buttonPanel.add(accountTextField);
+		buttonPanel.add(editTextField);
 		buttonPanel.add(jButtonDeposit);
 		buttonPanel.add(jButtonWithdraw);
 		buttonPanel.add(jButtonDismiss);
