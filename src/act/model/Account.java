@@ -19,5 +19,17 @@ public class Account {
 	public String toString(){
 		return ID + " " + name + " " + balance;
 	}
+	
+	public double getBalance(){
+		return balance;
+	}
+	
+	public String getBalanceString(){
+		return Double.toString(balance);
+	}
+	
+	public String getName(){
+		return name;
+	}
 
 }

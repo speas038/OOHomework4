@@ -8,6 +8,7 @@ import java.awt.event.*;
 import act.model.AccountModel;
 import act.model.ModelEvent;
 import act.controller.AccountController;
+import act.model.Account;
 
 @SuppressWarnings("serial")
 public class AccountView extends JFrameView {
@@ -18,6 +19,8 @@ public class AccountView extends JFrameView {
 	public static final String YEN = "Edit in Yen"; 
 	public static final String SAVE = "Save"; 
 	public static final String EXIT = "Exit"; 
+	
+	private JComboBox combo;
 	
 	
 	/*
@@ -32,6 +35,9 @@ public class AccountView extends JFrameView {
 //		accounts = readAccounts(model.accounts);
 		JComboBox accountsCombo = new JComboBox(model.accounts.toArray());
 		accountsCombo.addActionListener(l);
+		this.combo = accountsCombo;
+		model.setCurrentAccount((Account)accountsCombo.getSelectedItem());
+		
 		JButton jButtonUSD = new JButton(USD);
 		jButtonUSD.addActionListener(l);
 		JButton jButtonEuros = new JButton(EUROS);
@@ -57,10 +63,9 @@ public class AccountView extends JFrameView {
 		
 	}
 	
-//	public void spawnEdit(){
-//		EditView edit = new EditView(this.model, this.controller, l ) );
-//		edit.setVisible(true);
-//	}
+	public Account getSelectedItem(){
+		return (Account)combo.getSelectedItem();
+	}
 	
 	@Override
 	public void modelChanged(ModelEvent event) {

@@ -1,9 +1,12 @@
 package act.controller;
 
+import act.model.Account;
 import act.model.AccountModel;
 import act.view.AccountView;
 import act.view.EditView;
 import act.view.JFrameView;
+import javax.swing.JComboBox;
+
 
 public class AccountController extends AbstractController {
 	
@@ -13,6 +16,7 @@ public class AccountController extends AbstractController {
 		setModel(new AccountModel(args) );
 		setView( new AccountView( (AccountModel)getModel(), this ));
 		((JFrameView)getView()).setVisible(true);
+		((JFrameView)getView()).setTitle("Hello");
 		
 		
 	}
@@ -25,16 +29,25 @@ public class AccountController extends AbstractController {
 			((AccountModel)getModel()).setcurrentRate(AccountView.USD);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);
+			//set the title of the JFrame window
+			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			
 			
 		}else if(option == AccountView.EUROS){
 			((AccountModel)getModel()).setcurrentRate(AccountView.EUROS);
 			swapView( new EditView( (AccountModel)getModel(), this));
-			((JFrameView)getView()).setVisible(true);			
+			((JFrameView)getView()).setVisible(true);	
+//			((JFrameView)getView()).setDimension()
+			
+			//set the title of the JFrame window
+			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
 			
 		}else if(option == AccountView.YEN){
 			((AccountModel)getModel()).setcurrentRate(AccountView.YEN);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);	
+			//set the title of the JFrame window
+			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
 			
 		}else if(option == AccountView.SAVE){
 			((AccountModel)getModel()).save();
@@ -48,6 +61,9 @@ public class AccountController extends AbstractController {
 		}else if(option == EditView.editDismiss){
 			((JFrameView)getView()).setVisible(false);
 			returnView();
+		
+		}else if(option == "comboBoxChanged"){
+			((AccountModel)getModel()).setCurrentAccount((((AccountView)getView()).getSelectedItem()));
 			
 		}else if(option == EditView.editWithdraw){
 			

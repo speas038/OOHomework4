@@ -5,13 +5,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
+import javax.swing.JTextField;
 
 import act.model.ModelEvent;
 import act.model.AccountModel;
+import act.model.Account;
 import act.controller.AccountController;
 
 
@@ -28,12 +30,11 @@ public class EditView extends JFrameView{
 		super(model, controller);
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//		setUndecorated(true);
-//		getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		
-		
+		JLabel balanceLabel = new JLabel("Balance:");
+		JTextField accountTextField = new JTextField(((Account)model.getCurrentAccount()).getBalanceString());
 		JButton jButtonDeposit = new JButton(editDeposit);
 		jButtonDeposit.addActionListener(l);
 		JButton jButtonWithdraw = new JButton(editWithdraw);
@@ -41,10 +42,11 @@ public class EditView extends JFrameView{
 		JButton jButtonDismiss = new JButton(editDismiss);
 		jButtonDismiss.addActionListener(l);
 		
-		buttonPanel.setLayout(new GridLayout(5, 5, 7, 7));
+		buttonPanel.setLayout(new GridLayout(3, 2, 20, 20));
 		this.getContentPane().add(buttonPanel, BorderLayout.CENTER);
 		
-		
+		buttonPanel.add(balanceLabel);
+		buttonPanel.add(accountTextField);
 		buttonPanel.add(jButtonDeposit);
 		buttonPanel.add(jButtonWithdraw);
 		buttonPanel.add(jButtonDismiss);

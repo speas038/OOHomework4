@@ -11,10 +11,16 @@ import act.view.AccountView;
 public class AccountModel extends AbstractModel{
 	
 	public PriorityQueue<Account> accounts = new PriorityQueue<Account>(100, new AccountComparator());
+	public Account currentAccount;
 	public static final double EURO = 0.77;
 	public static final double YEN = 93.57;
 	public static final double USD = 1.0;
 	private double currentRate = USD;
+	
+	
+	public AccountModel(String [] args){
+		readAccounts(args[0]);
+	}
 	
 	public void setcurrentRate(String selection){
 		if(selection == AccountView.EUROS){
@@ -27,9 +33,14 @@ public class AccountModel extends AbstractModel{
 		
 		System.out.println("Current Rate changed to " + currentRate);
 	}
-
-	public AccountModel(String [] args){
-		readAccounts(args[0]);
+	
+	public void setCurrentAccount(Account act){
+		this.currentAccount = act;
+//		System.out.println("Current Account: " + currentAccount.toString());
+	}
+	
+	public Account getCurrentAccount(){
+		return currentAccount;
 	}
 	
 	public void usd(){
