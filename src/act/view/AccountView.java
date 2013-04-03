@@ -1,12 +1,9 @@
 package act.view;
 
 import javax.swing.*; 
+
 import java.awt.*; 
 import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.ArrayList;
 
 import act.model.AccountModel;
 import act.model.ModelEvent;
@@ -15,24 +12,25 @@ import act.controller.AccountController;
 @SuppressWarnings("serial")
 public class AccountView extends JFrameView {
 	
-	private String [] accounts;
+//	private String [] accounts;
 	public static final String USD = "Edit in USD"; 
 	public static final String EUROS = "Edit in Euros"; 
 	public static final String YEN = "Edit in Yen"; 
 	public static final String SAVE = "Save"; 
 	public static final String EXIT = "Exit"; 
 	
+	
 	/*
 	 * AccountView initializes the view and opens the file specified by the command line.
 	 */
-	public AccountView(AccountModel model, AccountController controller, String [] args){
-		
+	public AccountView(AccountModel model, AccountController controller){
 		super(model, controller);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		
-		accounts = readAccounts(args);
-		JComboBox accountsCombo = new JComboBox(accounts);
+//		accounts = readAccounts(model.accounts);
+		JComboBox accountsCombo = new JComboBox(model.accounts.toArray());
 		accountsCombo.addActionListener(l);
 		JButton jButtonUSD = new JButton(USD);
 		jButtonUSD.addActionListener(l);
@@ -59,43 +57,17 @@ public class AccountView extends JFrameView {
 		
 	}
 	
-	/**
-	 * readAccounts is for the initialization of the JComboBox that holds the accounts.
-	 * 
-	 * @param args
-	 * @return String []
-	 */
-	private String [] readAccounts(String [] args){	
-		
-        // Location of file to read
-        File file = new File(args[0]);
-        ArrayList<String> stringList = new ArrayList<String>();
-                
-        try {
-            Scanner scanner = new Scanner(file);
- 
-            while (scanner.hasNextLine()) {
-                stringList.add(scanner.nextLine());
-            }
-            String [] retArray = new String[stringList.size()];
-            stringList.toArray(retArray);
-            scanner.close();
-            
-            return retArray;
-            
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-	}
+//	public void spawnEdit(){
+//		EditView edit = new EditView(this.model, this.controller, l ) );
+//		edit.setVisible(true);
+//	}
 	
 	@Override
 	public void modelChanged(ModelEvent event) {
 		// TODO Auto-generated method stub
-		
 	}
 	
-	class Handler implements ActionListener { 
+	public class Handler implements ActionListener { 
 		// Event handling is handled locally
 		public void actionPerformed(ActionEvent e) {
 			((AccountController)getController()).operation(e.getActionCommand());
