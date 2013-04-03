@@ -1,7 +1,6 @@
 package act.model;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 import java.util.PriorityQueue;
 import java.util.Comparator;
@@ -12,6 +11,7 @@ public class AccountModel extends AbstractModel{
 	
 	public PriorityQueue<Account> accounts = new PriorityQueue<Account>(100, new AccountComparator());
 	public Account currentAccount;
+	public String inputFile;
 	public static final double EURO = 0.77;
 	public static final double YEN = 93.57;
 	public static final double USD = 1.0;
@@ -61,6 +61,22 @@ public class AccountModel extends AbstractModel{
 	public void save(){
 		System.out.println("SAVE model code executed");
 		
+		try {
+			FileWriter fstream = new FileWriter(inputFile);
+			BufferedWriter out = new BufferedWriter(fstream);
+			
+			for (Account e : accounts){
+				out.write(e.getID() + ",");
+				out.write(e.getName() + ",");
+				out.write(Double.toString(e.getBalance()) + '\n');
+			}
+			out.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void exit(){
@@ -75,7 +91,7 @@ public class AccountModel extends AbstractModel{
 	 * @return String []
 	 */
 	private void readAccounts(String input){
-		
+		inputFile = new String(input);
         // Location of file to read
         File file = new File(input);
         String [] temp;

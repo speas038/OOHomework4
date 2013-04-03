@@ -24,6 +24,10 @@ public class Account {
 		return balance;
 	}
 	
+	public int getID(){
+		return ID;
+	}
+	
 	public void setBalance(double bal){
 		balance = bal;
 	}
