@@ -25,6 +25,8 @@ public class EditView extends JFrameView{
 	public static final String editWithdraw = "Withdraw";
 	public static final String editDismiss = "Dismiss";
 	
+	private JTextField balanceRef;
+	private JTextField editRef;
 	
 	public EditView(AccountModel model, AccountController controller ){
 		super(model, controller);
@@ -36,7 +38,9 @@ public class EditView extends JFrameView{
 		JLabel balanceLabel = new JLabel("Balance:");
 		JTextField accountTextField = new JTextField(((Account)model.getCurrentAccount()).getBalanceString());
 		accountTextField.setEditable(false);
+		balanceRef = accountTextField;
 		JTextField editTextField = new JTextField("0.0");
+		editRef = editTextField;
 		JButton jButtonDeposit = new JButton(editDeposit);
 		jButtonDeposit.addActionListener(l);
 		JButton jButtonWithdraw = new JButton(editWithdraw);
@@ -56,10 +60,17 @@ public class EditView extends JFrameView{
 		
 		pack();
 	}
+	
+	public double getAmountChanged(){
+		return Double.parseDouble(editRef.getText());
+	}
 
 	@Override
 	public void modelChanged(ModelEvent event) {
 		// TODO Auto-generated method stub
+		balanceRef.setText(Double.toString(event.getAmount()));
+		balanceRef.updateUI();
+		
 		
 	}
 	class Handler implements ActionListener { 

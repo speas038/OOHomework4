@@ -8,7 +8,10 @@ import act.view.JFrameView;
 import javax.swing.JComboBox;
 
 
+@SuppressWarnings("unused")
 public class AccountController extends AbstractController {
+	
+	private String currentSelection = AccountView.USD;
 	
 	//It makes sense that the arguments would get passed to the conroller then passed to the view.
 	
@@ -23,7 +26,7 @@ public class AccountController extends AbstractController {
 	
 	public void operation(String option){
 		
-		System.out.println("Controller option: " + option);
+//		System.out.println("Controller option: " + option);
 		
 		if(option == AccountView.USD){
 			((AccountModel)getModel()).setcurrentRate(AccountView.USD);
@@ -31,13 +34,15 @@ public class AccountController extends AbstractController {
 			((JFrameView)getView()).setVisible(true);
 			//set the title of the JFrame window
 			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			currentSelection = AccountView.USD;
 			
 			
 		}else if(option == AccountView.EUROS){
 			((AccountModel)getModel()).setcurrentRate(AccountView.EUROS);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);	
-//			((JFrameView)getView()).setDimension()
+			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			currentSelection = AccountView.EUROS;
 			
 			//set the title of the JFrame window
 			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
@@ -46,8 +51,8 @@ public class AccountController extends AbstractController {
 			((AccountModel)getModel()).setcurrentRate(AccountView.YEN);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);	
-			//set the title of the JFrame window
 			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			currentSelection = AccountView.YEN;
 			
 		}else if(option == AccountView.SAVE){
 			((AccountModel)getModel()).save();
@@ -57,6 +62,7 @@ public class AccountController extends AbstractController {
 			System.exit(0);
 			
 		}else if(option == EditView.editDeposit){
+			((AccountModel)getModel()).deposit(((EditView)getView()).getAmountChanged());
 			
 		}else if(option == EditView.editDismiss){
 			((JFrameView)getView()).setVisible(false);
@@ -66,6 +72,7 @@ public class AccountController extends AbstractController {
 			((AccountModel)getModel()).setCurrentAccount((((AccountView)getView()).getSelectedItem()));
 			
 		}else if(option == EditView.editWithdraw){
+				((AccountModel)getModel()).withdraw(((EditView)getView()).getAmountChanged());
 			
 		}
 	}

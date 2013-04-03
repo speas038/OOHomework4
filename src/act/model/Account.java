@@ -24,6 +24,10 @@ public class Account {
 		return balance;
 	}
 	
+	public void setBalance(double bal){
+		balance = bal;
+	}
+	
 	public String getBalanceString(){
 		return Double.toString(balance);
 	}

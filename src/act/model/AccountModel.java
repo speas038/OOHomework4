@@ -31,7 +31,7 @@ public class AccountModel extends AbstractModel{
 			currentRate = YEN;
 		}
 		
-		System.out.println("Current Rate changed to " + currentRate);
+//		System.out.println("Current Rate changed to " + currentRate);
 	}
 	
 	public void setCurrentAccount(Account act){
@@ -43,24 +43,24 @@ public class AccountModel extends AbstractModel{
 		return currentAccount;
 	}
 	
-	public void usd(){
-		System.out.println("USD model code executed");
+	public void deposit(double amt){
+//		System.out.println("AMT: " + amt);
+		currentAccount.setBalance(currentAccount.getBalance() + amt*currentRate);
+		ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
+		notifyChanged(e);
 	}
 	
-	public void changeUSD(){
-		System.out.println("CHANGE USD");
+	public void withdraw(double amt){
+//		System.out.println("AMT: " + amt);
+		currentAccount.setBalance(currentAccount.getBalance() - amt*currentRate);
+		ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
+		notifyChanged(e);
 	}
 	
-	public void euros(){
-		System.out.println("EURO model code executed");
-	}
-	
-	public void yen(){
-		System.out.println("YEN model code executed");
-	}
 	
 	public void save(){
 		System.out.println("SAVE model code executed");
+		
 	}
 	
 	public void exit(){

@@ -69,7 +69,10 @@ public class AccountView extends JFrameView {
 	
 	@Override
 	public void modelChanged(ModelEvent event) {
-		// TODO Auto-generated method stub
+		// TODO update objects in comboBox
+		((Account)combo.getSelectedItem()).setBalance(event.getAmount());
+		combo.updateUI();
+		 
 	}
 	
 	public class Handler implements ActionListener { 
