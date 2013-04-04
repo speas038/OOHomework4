@@ -19,7 +19,7 @@ public class AccountController extends AbstractController {
 		setModel(new AccountModel(args) );
 		setView( new AccountView( (AccountModel)getModel(), this ));
 		((JFrameView)getView()).setVisible(true);
-		((JFrameView)getView()).setTitle("Hello");
+		((JFrameView)getView()).setTitle("Speas Accounting Software");
 		
 		
 	}
@@ -33,7 +33,8 @@ public class AccountController extends AbstractController {
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);
 			//set the title of the JFrame window
-			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			String title = new String(((AccountModel)getModel()).getCurrentAccount().getName() + " - " + Integer.toString(((AccountModel)getModel()).getCurrentAccount().getID()));
+			((JFrameView)getView()).setTitle(title);
 			currentSelection = AccountView.USD;
 			
 			
@@ -41,17 +42,18 @@ public class AccountController extends AbstractController {
 			((AccountModel)getModel()).setcurrentRate(AccountView.EUROS);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);	
-			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
-			currentSelection = AccountView.EUROS;
-			
 			//set the title of the JFrame window
-			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			String title = new String(((AccountModel)getModel()).getCurrentAccount().getName() + " - " + Integer.toString(((AccountModel)getModel()).getCurrentAccount().getID()));
+			((JFrameView)getView()).setTitle(title);
+			currentSelection = AccountView.EUROS;
 			
 		}else if(option == AccountView.YEN){
 			((AccountModel)getModel()).setcurrentRate(AccountView.YEN);
 			swapView( new EditView( (AccountModel)getModel(), this));
 			((JFrameView)getView()).setVisible(true);	
-			((JFrameView)getView()).setTitle(((AccountModel)getModel()).getCurrentAccount().getName());
+			//set the title of the JFrame window
+			String title = new String(((AccountModel)getModel()).getCurrentAccount().getName() + " - " + Integer.toString(((AccountModel)getModel()).getCurrentAccount().getID()));
+			((JFrameView)getView()).setTitle(title);
 			currentSelection = AccountView.YEN;
 			
 		}else if(option == AccountView.SAVE){

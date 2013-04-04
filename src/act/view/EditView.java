@@ -61,8 +61,8 @@ public class EditView extends JFrameView{
 		pack();
 	}
 	
-	public double getAmountChanged(){
-		return Double.parseDouble(editRef.getText());
+	public String getAmountChanged(){
+		return editRef.getText();
 	}
 
 	@Override

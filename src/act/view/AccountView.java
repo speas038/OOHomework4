@@ -28,7 +28,7 @@ public class AccountView extends JFrameView {
 	 */
 	public AccountView(AccountModel model, AccountController controller){
 		super(model, controller);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		JPanel buttonPanel = new JPanel();
 		Handler l = new Handler();
 		

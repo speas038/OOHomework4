@@ -1,15 +1,15 @@
 package act.model;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.PriorityQueue;
-import java.util.Comparator;
 import act.view.AccountView;
-
+import java.util.Collections;
 
 public class AccountModel extends AbstractModel{
 	
-	public PriorityQueue<Account> accounts = new PriorityQueue<Account>(100, new AccountComparator());
+//	public PriorityQueue<Account> accounts = new PriorityQueue<Account>(100, new AccountComparator());
+	public ArrayList<Account> accounts = new ArrayList<Account>();
 	public Account currentAccount;
 	public String inputFile;
 	public static final double EURO = 0.77;
@@ -36,30 +36,47 @@ public class AccountModel extends AbstractModel{
 	
 	public void setCurrentAccount(Account act){
 		this.currentAccount = act;
-//		System.out.println("Current Account: " + currentAccount.toString());
 	}
 	
 	public Account getCurrentAccount(){
 		return currentAccount;
 	}
 	
-	public void deposit(double amt){
-//		System.out.println("AMT: " + amt);
-		currentAccount.setBalance(currentAccount.getBalance() + amt*currentRate);
-		ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
-		notifyChanged(e);
+	public void deposit(String amt){
+		
+		if( isValid(amt)){
+			double amount = Double.parseDouble(amt);
+			currentAccount.setBalance(currentAccount.getBalance() + amount*currentRate);
+			ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
+			notifyChanged(e);
+		}
 	}
 	
-	public void withdraw(double amt){
-//		System.out.println("AMT: " + amt);
-		currentAccount.setBalance(currentAccount.getBalance() - amt*currentRate);
-		ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
-		notifyChanged(e);
+	public void withdraw(String amt){
+		
+		if( isValid(amt) ){
+			double amount = Double.parseDouble(amt);
+			currentAccount.setBalance(currentAccount.getBalance() - amount*currentRate);
+			ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
+			notifyChanged(e);
+		}
 	}
 	
+	private boolean isValid(String s){
+		
+		char t = '0';
+		for (int i = 0; i<s.length(); i++){
+			t = s.charAt(i);
+			if( !Character.isDigit(t) && t != '.' ){
+				return false;
+			}
+			return true;
+		}
+		
+		return false;
+	}
 	
 	public void save(){
-		System.out.println("SAVE model code executed");
 		
 		try {
 			FileWriter fstream = new FileWriter(inputFile);
@@ -68,19 +85,18 @@ public class AccountModel extends AbstractModel{
 			for (Account e : accounts){
 				out.write(e.getID() + ",");
 				out.write(e.getName() + ",");
-				out.write(Double.toString(e.getBalance()) + '\n');
+				out.write(String.format("%.2f",e.getBalance()) + '\n');
 			}
 			out.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 	
 	public void exit(){
-		System.out.println("System exit code");
+		save();
 	}
 	
 	
@@ -104,27 +120,39 @@ public class AccountModel extends AbstractModel{
  
             while (scanner.hasNextLine()) {
                 temp = ((String)scanner.nextLine()).split("[,\n]");
+                boolean repeat = false;
                 ID = Integer.parseInt(temp[0]);
                 name = temp[1];
                 balance = Double.parseDouble(temp[2]);
-                accounts.add(new Account(ID, name, balance));
+                for (Account e : accounts){
+                	if(e.getID() == ID){
+                		repeat = true;
+                		System.out.println("found repeat");
+                	}
+                }
+                if(repeat == false){
+                	accounts.add(new Account(ID, name, balance));
+                }
+                repeat = false;
+                
             }
             
             scanner.close();
+            Collections.sort(accounts);
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 	}
 	
-	private class AccountComparator implements Comparator<Account>{
-		public int compare(Account a1, Account a2){
-			if(a1.ID < a2.ID)
-				return -1;
-			else if (a1.ID > a2.ID)
-				return 1;
-			else 
-				return 0;
-		}
-	}
+//	private class AccountComparator implements Comparator<Account>{
+//		public int compare(Account a1, Account a2){
+//			if(a1.ID < a2.ID)
+//				return -1;
+//			else if (a1.ID > a2.ID)
+//				return 1;
+//			else 
+//				return 0;
+//		}
+//	}
 }

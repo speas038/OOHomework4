@@ -1,6 +1,8 @@
 package act.model;
 
-public class Account {
+
+
+public class Account implements Comparable<Account>{
 	
 	public int ID;
 	public String name;
@@ -38,6 +40,15 @@ public class Account {
 	
 	public String getName(){
 		return name;
+	}
+	
+	public int compareTo(Account a){
+		if (this.ID < a.ID )
+			return -1;
+		else if(this.ID > a.ID)
+			return 1;
+		else
+			return 0;
 	}
 
 }
