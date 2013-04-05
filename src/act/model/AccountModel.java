@@ -1,6 +1,7 @@
 package act.model;
 
 import java.io.*;
+import java.lang.Exception;
 import java.util.ArrayList;
 import java.util.Scanner;
 import act.view.AccountView;
@@ -42,9 +43,11 @@ public class AccountModel extends AbstractModel{
 		return currentAccount;
 	}
 	
-	public void deposit(String amt){
+	public void deposit(String amt) throws Exception{
 		
-		if( isValid(amt)){
+		if( !isValid(amt)){
+			throw new Exception("Input must be number");
+		}else{
 			double amount = Double.parseDouble(amt);
 			currentAccount.setBalance(currentAccount.getBalance() + amount*currentRate);
 			ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
@@ -52,14 +55,26 @@ public class AccountModel extends AbstractModel{
 		}
 	}
 	
-	public void withdraw(String amt){
+	public void withdraw(String amt) throws Exception{
+		double amount = Double.parseDouble(amt);
 		
-		if( isValid(amt) ){
-			double amount = Double.parseDouble(amt);
+		if( !isValid(amt) ){
+			throw new Exception("Input must be number");
+		}else if(insufficientFunds(amount)){
+			throw new Exception("Insufficient Funds: Amount to withdraw is " + -(currentAccount.balance - amount*currentRate) + " over the current balance of " + currentAccount.balance);
+		}else{
 			currentAccount.setBalance(currentAccount.getBalance() - amount*currentRate);
 			ModelEvent e = new ModelEvent((Object)this, 1, "changed", currentAccount.getBalance());
 			notifyChanged(e);
 		}
+	}
+	
+	private boolean insufficientFunds(double amount){
+		
+		if( (currentAccount.balance - amount*currentRate <= 0)){
+			return true;
+		}
+		return false;
 	}
 	
 	private boolean isValid(String s){

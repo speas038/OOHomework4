@@ -64,17 +64,29 @@ public class AccountController extends AbstractController {
 			System.exit(0);
 			
 		}else if(option == EditView.editDeposit){
-			((AccountModel)getModel()).deposit(((EditView)getView()).getAmountChanged());
+			try {
+				((AccountModel)getModel()).deposit(((EditView)getView()).getAmountChanged());
+			} catch (Exception e) {
+				((EditView)getView()).displayDialog(e.getMessage());
+			}
+			((EditView)getView()).resetEditField();
 			
 		}else if(option == EditView.editDismiss){
 			((JFrameView)getView()).setVisible(false);
 			returnView();
+			
 		
 		}else if(option == "comboBoxChanged"){
 			((AccountModel)getModel()).setCurrentAccount((((AccountView)getView()).getSelectedItem()));
 			
 		}else if(option == EditView.editWithdraw){
+			try{
 				((AccountModel)getModel()).withdraw(((EditView)getView()).getAmountChanged());
+				((EditView)getView()).resetEditField();
+			}catch(Exception e){
+				((EditView)getView()).displayDialog(e.getMessage());
+			}
+				
 			
 		}
 	}

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -39,7 +40,7 @@ public class EditView extends JFrameView{
 		JTextField accountTextField = new JTextField(((Account)model.getCurrentAccount()).getBalanceString());
 		accountTextField.setEditable(false);
 		balanceRef = accountTextField;
-		JTextField editTextField = new JTextField("0.0");
+		JTextField editTextField = new JTextField("0");
 		editRef = editTextField;
 		JButton jButtonDeposit = new JButton(editDeposit);
 		jButtonDeposit.addActionListener(l);
@@ -64,14 +65,20 @@ public class EditView extends JFrameView{
 	public String getAmountChanged(){
 		return editRef.getText();
 	}
+	
+	public void resetEditField(){
+		editRef.setText("0");
+	}
+	
+	public void displayDialog(String message){
+		JOptionPane.showMessageDialog(this, message);
+	}
 
 	@Override
 	public void modelChanged(ModelEvent event) {
 		// TODO Auto-generated method stub
 		balanceRef.setText(Double.toString(event.getAmount()));
 		balanceRef.updateUI();
-		
-		
 	}
 	class Handler implements ActionListener { 
 		// Event handling is handled locally
